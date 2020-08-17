@@ -1,5 +1,5 @@
-const core = require("@actions/core");
-const github = require("@actions/github");
+import "@actions/core";
+import "@actions/github";
 
 try {
   // `who-to-greet` input defined in action metadata file
