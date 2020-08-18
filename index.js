@@ -53,6 +53,13 @@ async function disptachPREvents(octokit, prs) {
       .catch((e) => {
         console.error(e);
       });
+    
+      await octokit.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
+        owner,
+        repo,
+        workflow_id,
+        ref: pr.head.ref
+      })
   });
 }
 
