@@ -43,7 +43,6 @@ async function disptachPREvents(octokit, prs) {
 
   prs.forEach((pr) => {
     console.log(`${pr.title}: Attempting to dispatch event to PR named`);
-    console.log(pr.head.ref, pr.head);
     octokit.actions
       .createWorkflowDispatch({
         owner,
@@ -53,7 +52,7 @@ async function disptachPREvents(octokit, prs) {
       })
       .then(() => console.log(`${pr.title}: Finished`))
       .catch((e) => {
-        console.error(e);
+        console.error(`${pr.title} Errored: ${e}`);
       });
   });
 }
