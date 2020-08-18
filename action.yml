@@ -5,6 +5,14 @@ inputs:
     description: "Who to greet"
     required: true
     default: "World"
+  state:
+    description: "What state should the PR be in open/closed"
+    required: false
+    default: "all"
+  label:
+    description: "Label the PR should contain"
+    required: false
+    default: ""
 outputs:
   time: # id of output
     description: "The time we greeted you"
