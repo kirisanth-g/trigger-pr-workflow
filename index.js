@@ -44,10 +44,11 @@ async function getPRs(octokit, url) {
   return data;
 }
 
-function filterPRByLabel(prs, label) {
-  console.log(typeof prs);
+function filterPRByLabel(prs, input_label) {
   return prs.filter(function (pr) {
-    return pr.label.name == label;
+    return pr.label.some(function (label) {
+      label.name == input_label;
+    });
   });
 }
 
