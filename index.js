@@ -18,12 +18,17 @@ try {
 }
 
 async function main() {
+  const token = process.env.GITHUB_TOKEN;
+
   const octokit = new Octokit({
     auth: `token ${GITHUB_TOKEN}`,
     userAgent: "kirisanth/trigger-pr-workflow",
   });
 
-  await getPRs(octokit, payload.head_commit.URL);
+  console.log("Process:", process, process.env);
+  console.log("OK", octokit);
+
+  await getPRs(octokit, "payload.head_commit.URL");
 }
 
 async function getPRs(octokit, url) {
