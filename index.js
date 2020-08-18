@@ -35,7 +35,7 @@ async function main() {
 async function getPRs(octokit, url) {
   const { owner, repo } = github.context.repo;
   const state = core.getInput("state");
-  const data = await octokit.pulls.list({
+  const { data } = await octokit.pulls.list({
     owner,
     repo,
     state,
