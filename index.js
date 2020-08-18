@@ -2,18 +2,18 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const { Octokit } = require("@octokit/rest");
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput("who-to-greet");
-  console.log(`Hello ${nameToGreet}!`);
-  const time = new Date().toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
-} catch (error) {
-  core.setFailed(error.message);
-}
+// try {
+//   // `who-to-greet` input defined in action metadata file
+//   const nameToGreet = core.getInput("who-to-greet");
+//   console.log(`Hello ${nameToGreet}!`);
+//   const time = new Date().toTimeString();
+//   core.setOutput("time", time);
+//   // Get the JSON webhook payload for the event that triggered the workflow
+//   const payload = JSON.stringify(github.context.payload, undefined, 2);
+//   console.log(`The event payload: ${payload}`);
+// } catch (error) {
+//   core.setFailed(error.message);
+// }
 
 async function main() {
   const token = process.env.GITHUB_TOKEN;
@@ -24,12 +24,12 @@ async function main() {
     userAgent: "kirisanth/trigger-pr-workflow",
   });
 
-  let pr = await getPRs(octokit, "payload.head_commit.URL");
+  let prs = await getPRs(octokit, "payload.head_commit.URL");
   if (label) {
-    pr = filterPRByLabel(pr, label);
+    prs = filterPRByLabel(prs, label);
   }
 
-  console.log(pr);
+  console.log(prs);
 }
 
 async function getPRs(octokit, url) {
@@ -45,6 +45,7 @@ async function getPRs(octokit, url) {
 }
 
 function filterPRByLabel(prs, label) {
+  console.log(typeof prs);
   return prs.filter(function (pr) {
     return pr.label.name == label;
   });
