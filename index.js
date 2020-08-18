@@ -16,8 +16,6 @@ async function main() {
     prs = filterPRByLabel(prs, label);
   }
 
-  console.log(prs);
-
   await disptachPREvents(octokit, prs);
 }
 
@@ -44,17 +42,17 @@ async function disptachPREvents(octokit, prs) {
   const workflow_id = core.getInput("workflow");
 
   prs.forEach((pr) => {
-    console.log(`Attempting to dispatch event to ${pr.title}`);
-    try {
-      octokit.actions.createWorkflowDispatch({
+    console.log(`Attempting to dispatch event to PR named: ${pr.title}`);
+    octokit.actions
+      .createWorkflowDispatch({
         owner,
         repo,
         workflow_id,
         ref: pr.head.ref,
+      })
+      .catch((e) => {
+        console.error(e);
       });
-    } catch (e) {
-      console.error(e);
-    }
   });
 }
 
