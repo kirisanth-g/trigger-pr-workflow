@@ -47,9 +47,7 @@ async function getPRs(octokit, url) {
 function filterPRByLabel(prs, input_label) {
   console.log(prs, input_label);
   return prs.filter(function (pr) {
-    return pr.labels.some(function (label) {
-      label.name == input_label;
-    });
+    return pr.labels.some((label) => label.name == input_label);
   });
 }
 
