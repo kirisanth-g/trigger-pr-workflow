@@ -1,5 +1,8 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
+const { Octokit } = require("@octokit/rest");
+
+const URL_REGEXP = /^https:\/\/github.com\/([^/]+)\/([^/]+)\/(pull|tree)\/([^ ]+)$/;
 
 try {
   // `who-to-greet` input defined in action metadata file
@@ -13,3 +16,31 @@ try {
 } catch (error) {
   core.setFailed(error.message);
 }
+const token = process.env.GITHUB_TOKEN;
+
+console.log("URL: ", process.env.URL);
+
+async function main() {
+  const octokit = new Octokit({
+    auth: `token ${token}`,
+    userAgent: "kirisanth/trigger-pr-workflow",
+  });
+
+  await getPRs(octokit, process.env.URL);
+}
+
+async function getPRs(octokit, url) {
+  const m = url.match(URL_REGEXP);
+  const data = await octokit.pulls.list({
+    owner: m[1],
+    repo: m[2],
+    state: "open",
+  });
+
+  console.log(data);
+}
+
+main().catch((e) => {
+  process.exitCode = 1;
+  console.error(e);
+});
