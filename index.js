@@ -21,7 +21,7 @@ async function main() {
   const token = process.env.GITHUB_TOKEN;
 
   const octokit = new Octokit({
-    auth: `token ${GITHUB_TOKEN}`,
+    auth: `token ${token}`,
     userAgent: "kirisanth/trigger-pr-workflow",
   });
 
