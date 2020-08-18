@@ -17,6 +17,8 @@ async function main() {
   }
 
   console.log(prs);
+
+  await disptachPREvents(octokit, prs);
 }
 
 async function getPRs(octokit, url) {
@@ -34,6 +36,20 @@ async function getPRs(octokit, url) {
 function filterPRByLabel(prs, input_label) {
   return prs.filter(function (pr) {
     return pr.labels.some((label) => label.name == input_label);
+  });
+}
+
+async function disptachPREvents(octokit, prs) {
+  const { owner, repo } = github.context.repo;
+  const workflow_id = core.getInput("workflow");
+
+  prs.forEach((pr) => {
+    octokit.actions.createWorkflowDispatch({
+      owner,
+      repo,
+      workflow_id,
+      ref: pr.head.ref,
+    });
   });
 }
 

@@ -1,10 +1,9 @@
 name: "Trigger PR Workflow"
 description: "Triggers PR workflows externally from the PR events"
 inputs:
-  who-to-greet: # id of input
-    description: "Who to greet"
+  workflow:
+    description: "ID or Name of the workflow to execute"
     required: true
-    default: "World"
   state:
     description: "What state should the PR be in open/closed"
     required: false
