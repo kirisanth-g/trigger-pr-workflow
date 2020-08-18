@@ -2,8 +2,6 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const { Octokit } = require("@octokit/rest");
 
-const URL_REGEXP = /^https:\/\/github.com\/([^/]+)\/([^/]+)\/(pull|tree)\/([^ ]+)$/;
-
 try {
   // `who-to-greet` input defined in action metadata file
   const nameToGreet = core.getInput("who-to-greet");
@@ -25,17 +23,14 @@ async function main() {
     userAgent: "kirisanth/trigger-pr-workflow",
   });
 
-  console.log("Process:", process.env);
-  console.log("GitHub", github.context.repo, github.context);
-
   await getPRs(octokit, "payload.head_commit.URL");
 }
 
 async function getPRs(octokit, url) {
-  const m = url.match(URL_REGEXP);
+  const { owner, repo } = github.context.repo;
   const data = await octokit.pulls.list({
-    owner: m[1],
-    repo: m[2],
+    owner,
+    repo,
     state: "open",
   });
 
