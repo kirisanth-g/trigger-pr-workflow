@@ -48,21 +48,11 @@ async function disptachPREvents(octokit, prs) {
         owner,
         repo,
         workflow_id,
-        ref: pr.head.sha,
+        ref: pr.head.ref,
       })
       .catch((e) => {
         console.error(e);
       });
-
-    octokit.request(
-      "POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches",
-      {
-        owner,
-        repo,
-        workflow_id,
-        ref: pr.head.sha,
-      }
-    );
   });
 }
 
