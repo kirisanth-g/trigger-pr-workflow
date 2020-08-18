@@ -46,7 +46,7 @@ async function disptachPREvents(octokit, prs) {
   prs.forEach((pr) => {
     console.log(`Attempting to dispatch event to ${pr.title}`);
     try {
-      await octokit.actions.createWorkflowDispatch({
+      octokit.actions.createWorkflowDispatch({
         owner,
         repo,
         workflow_id,
