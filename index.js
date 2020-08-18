@@ -50,6 +50,7 @@ async function disptachPREvents(octokit, prs) {
         workflow_id,
         ref: pr.head.ref,
       })
+      .then((data) => console.log(data))
       .catch((e) => {
         console.error(e);
       });
