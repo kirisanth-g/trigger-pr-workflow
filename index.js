@@ -16,11 +16,10 @@ try {
 } catch (error) {
   core.setFailed(error.message);
 }
-const token = process.env.GITHUB_TOKEN;
 
 async function main() {
   const octokit = new Octokit({
-    auth: `token ${token}`,
+    auth: `token ${GITHUB_TOKEN}`,
     userAgent: "kirisanth/trigger-pr-workflow",
   });
 
