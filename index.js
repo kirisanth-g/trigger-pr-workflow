@@ -17,24 +17,37 @@ try {
 
 async function main() {
   const token = process.env.GITHUB_TOKEN;
+  const label = core.getInput("label");
 
   const octokit = new Octokit({
     auth: `token ${token}`,
     userAgent: "kirisanth/trigger-pr-workflow",
   });
 
-  await getPRs(octokit, "payload.head_commit.URL");
+  let pr = await getPRs(octokit, "payload.head_commit.URL");
+  if (label) {
+    pr = filterPRByLabel(pr, label);
+  }
+
+  console.log(pr);
 }
 
 async function getPRs(octokit, url) {
   const { owner, repo } = github.context.repo;
+  const state = core.getInput("state");
   const data = await octokit.pulls.list({
     owner,
     repo,
-    state: "open",
+    state,
   });
 
-  console.log(data);
+  return data;
+}
+
+function filterPRByLabel(prs, label) {
+  return prs.filter(function (pr) {
+    return pr.label.name == label;
+  });
 }
 
 main().catch((e) => {
