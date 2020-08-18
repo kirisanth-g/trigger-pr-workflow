@@ -48,7 +48,7 @@ async function disptachPREvents(octokit, prs) {
         owner,
         repo,
         workflow_id,
-        ref: pr.head.ref,
+        ref: pr.head.sha,
       })
       .catch((e) => {
         console.error(e);
@@ -60,7 +60,7 @@ async function disptachPREvents(octokit, prs) {
         owner,
         repo,
         workflow_id,
-        ref: pr.head.ref,
+        ref: pr.head.sha,
       }
     );
   });
