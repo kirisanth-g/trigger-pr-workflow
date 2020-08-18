@@ -25,8 +25,8 @@ async function main() {
     userAgent: "kirisanth/trigger-pr-workflow",
   });
 
-  console.log("Process:", process, process.env);
-  console.log("OK", octokit);
+  console.log("Process:", process.env);
+  console.log("GitHub", github.context.repo, github.context);
 
   await getPRs(octokit, "payload.head_commit.URL");
 }
