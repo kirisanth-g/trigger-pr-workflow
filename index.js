@@ -46,7 +46,10 @@ function disptachPREvents(octokit, prs) {
       owner,
       repo,
     })
-    .then((data) => console.log(data));
+    .then((data) => {
+      const { workflows } = data;
+      workflows.forEach((wf) => console.log(wf));
+    });
 
   prs.forEach((pr) => {
     console.log(`${pr.title}: Attempting to dispatch event to PR named`);
@@ -60,7 +63,7 @@ function disptachPREvents(octokit, prs) {
       .then(() => console.log(`${pr.title}: Finished`))
       .catch((e) => {
         console.error(`${pr.title} Errored:`);
-        console.error(e);
+        // console.error(e);
       });
   });
 }
