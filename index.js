@@ -41,12 +41,12 @@ function disptachPREvents(octokit, prs) {
   const { owner, repo } = github.context.repo;
   const workflow_file_name = core.getInput("workflow");
 
-  console.log(
-    octokit.actions.listRepoWorkflows({
+  octokit.actions
+    .listRepoWorkflows({
       owner,
       repo,
     })
-  );
+    .then((data) => console.log(data));
 
   prs.forEach((pr) => {
     console.log(`${pr.title}: Attempting to dispatch event to PR named`);
