@@ -39,7 +39,7 @@ function filterPRByLabel(prs, input_label) {
 
 function disptachPREvents(octokit, prs) {
   const { owner, repo } = github.context.repo;
-  const workflow_id = core.getInput("workflow");
+  const workflow_file_name = core.getInput("workflow");
 
   prs.forEach((pr) => {
     console.log(`${pr.title}: Attempting to dispatch event to PR named`);
@@ -47,7 +47,7 @@ function disptachPREvents(octokit, prs) {
       .createWorkflowDispatch({
         owner,
         repo,
-        workflow_id,
+        workflow_file_name,
         ref: pr.head.ref,
       })
       .then(() => console.log(`${pr.title}: Finished`))
