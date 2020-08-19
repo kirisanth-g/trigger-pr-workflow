@@ -52,7 +52,8 @@ function disptachPREvents(octokit, prs) {
       })
       .then(() => console.log(`${pr.title}: Finished`))
       .catch((e) => {
-        console.error(`${pr.title} Errored: ${e}`);
+        console.error(`${pr.title} Errored:`);
+        console.error(e);
       });
   });
 }
