@@ -47,8 +47,7 @@ function disptachPREvents(octokit, prs) {
       repo,
     })
     .then((data) => {
-      const { workflows } = data;
-      console.log(workflows, data.workflows);
+      console.log(workflows, data["workflows"]);
     });
 
   prs.forEach((pr) => {
