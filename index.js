@@ -39,7 +39,7 @@ function filterPRByLabel(prs, input_label) {
 
 function disptachPREvents(octokit, prs) {
   const { owner, repo } = github.context.repo;
-  const workflow_file_name = core.getInput("workflow");
+  const workflow_id = core.getInput("workflow");
 
   octokit.actions
     .listRepoWorkflows({
@@ -54,7 +54,7 @@ function disptachPREvents(octokit, prs) {
       .createWorkflowDispatch({
         owner,
         repo,
-        workflow_file_name,
+        workflow_id,
         ref: pr.head.ref,
       })
       .then(() => console.log(`${pr.title}: Finished`))
