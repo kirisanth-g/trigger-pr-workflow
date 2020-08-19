@@ -16,7 +16,7 @@ async function main() {
     prs = filterPRByLabel(prs, label);
   }
 
-  await disptachPREvents(octokit, prs);
+  disptachPREvents(octokit, prs);
 }
 
 async function getPRs(octokit, url) {
@@ -37,7 +37,7 @@ function filterPRByLabel(prs, input_label) {
   });
 }
 
-async function disptachPREvents(octokit, prs) {
+function disptachPREvents(octokit, prs) {
   const { owner, repo } = github.context.repo;
   const workflow_id = core.getInput("workflow");
 
